@@ -1,0 +1,5 @@
+ingresar por putty o directo al servidor 
+ubicarse en la carpeta /usr/share/glassfish4/glassfish/bin
+ejecutar los siguientes archivos 
+sh stopserv
+sh startserv
