@@ -20,6 +20,15 @@ CODIGO N3
 DEBEMOS CREAR UNA TABLA LIS.BITRES EN DONDE SE SACA EL RESPALDO DE ALMENOS LOS ULTIMOS 7 DÍAS
 EN PROCESO DE APRENDIZAJE MIENTRAS TANTO LLAMAR A JUAN PABLO
 
+CODIGO N4
+TOMAR EN CONSIDERACION QUE SOLO DEBE HABER UN PATH PARA QUE NO EL ERROR DE 2 MEDIA FAMILIES
+PUEDE APARECER ESTE ERROR Sometimes when (for example) setting a database offline by executing the following command, an exception will be thrown, because one or more clients is connected SE DEBE EJECUTAR EL SIGUIENTE SCRIPT
+alter database nextlab
+set offline with rollback immediate
+alter database nextlab
+set online with rollback immediate
+
+
 
 
 
