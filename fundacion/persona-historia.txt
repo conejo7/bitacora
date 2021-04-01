@@ -1,0 +1,53 @@
+ALTER PROCEDURE "DBA"."test"( )
+
+as
+begin
+  /*	ESTE PROCEDIMIENTO INSERTA EN PERSONA.HISTORIA*/
+
+    declare @xid BIGINT 
+    declare @xnom_pac VARCHAR (128)
+    declare @xape_pac VARCHAR (128)
+    declare @xid_pac varchar (10)
+    declare @xcod_pac decimal(10)
+    declare @xnro_ord decimal(10)
+    declare @xcod_ana decimal(10)
+    declare @count int = 0
+    declare resultados dynamic scroll cursor for 
+        SELECT nom_pac,ape_pac,id_pac,"DBA"."ava_lispac".cod_pac, "DBA"."ava_petxord".nro_ord,
+        "DBA"."ava_petxord".upload, "DBA".ava_petxord.cod_ana, "DBA".risAvasus.cod_Avalab ,"DBA".risAvasus.cod_Avasus
+        FROM "DBA"."ava_lispac"   
+        JOIN "DBA"."ava_lisord" ON "DBA"."ava_lisord".cod_pac = "DBA".ava_lispac.cod_pac
+        JOIN "DBA"."ava_petxord" ON "DBA"."ava_petxord".nro_ord = "DBA"."ava_lisord".nro_ord      
+        AND ("DBA"."ava_petxord".upload =0 AND "DBA"."ava_petxord".nro_ord > 434273 )
+        JOIN "DBA"."risAvasus" ON "DBA"."ava_petxord".cod_ana like'%'+"DBA".risAvasus.cod_Avalab +'%' 
+    
+    open resultados
+  
+        fetch NEXT resultados into @xnom_pac,@xape_pac,@xid_pac,@xcod_pac,@xnro_ord
+
+        while @count <1
+           
+            BEGIN   
+                insert into "DBA"."historia" 
+                 (nombres,apellidos,titulo,sufijo,estado_civil,etnia,fecha_nace,pais_nace,orden_nac,
+                fecha_muerte,profesion,instruccion,pais_id,tipo_id,num_id,ocupacion,ciudad_nace,sexo,
+                tipo_sangre,tipo_edad,pwd,
+                fec_ini,lock_reg,fec_upd,first_user,last_user,first_oid,last_oid,id,
+                plural_nac,telefono,id_nextlab,direccion,email,pariente) 
+                 values (@xnom_pac,@xape_pac,'SR15',DEFAULT ,'S',DEFAULT ,'2011-08-07','ECU',0,DEFAULT ,
+                    '.','2','ECU','CI',@xid_pac,'.'
+                ,'QUITO','M','.',DEFAULT ,DEFAULT,'2011-08-07','0','2011-08-07','COTOCOLLAO1',
+                'FUNDACION',DEFAULT,DEFAULT,DEFAULT,'0'
+                ,DEFAULT,@xnro_ord ,'FUNDACION',DEFAULT,DEFAULT)
+              select * from "DBA"."historia" where id_nextlab = @xnro_ord
+              fetch NEXT resultados  into @xnom_pac,@xape_pac,@xid_pac,@xcod_pac,@xnro_ord
+              set @count = @count+1
+              
+            END
+  close resultados
+
+DEALLOCATE RESULTADOS
+
+
+COMMIT 
+end
