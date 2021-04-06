@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NombreCreateDlg" widgetVar="NombreCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateNombreTitle}">
+            <h:form id="NombreCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nombreController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{nombreController.selected.id}" title="#{bundle.CreateNombreTitle_id}" required="true" requiredMessage="#{bundle.CreateNombreRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_abreviatura}" for="abreviatura" />
+                        <p:inputText id="abreviatura" value="#{nombreController.selected.abreviatura}" title="#{bundle.CreateNombreTitle_abreviatura}" required="true" requiredMessage="#{bundle.CreateNombreRequiredMessage_abreviatura}"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_razonSocial}" for="razonSocial" />
+                        <p:inputText id="razonSocial" value="#{nombreController.selected.razonSocial}" title="#{bundle.CreateNombreTitle_razonSocial}" required="true" requiredMessage="#{bundle.CreateNombreRequiredMessage_razonSocial}"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_ruc}" for="ruc" />
+                        <p:inputText id="ruc" value="#{nombreController.selected.ruc}" title="#{bundle.CreateNombreTitle_ruc}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_fecIni}" for="fecIni" />
+                        <p:calendar id="fecIni" pattern="MM/dd/yyyy HH:mm:ss" value="#{nombreController.selected.fecIni}" title="#{bundle.EditNombreTitle_fecIni}" required="true" requiredMessage="#{bundle.EditNombreRequiredMessage_fecIni}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_lockReg}" for="lockReg" />
+                        <p:inputText id="lockReg" value="#{nombreController.selected.lockReg}" title="#{bundle.CreateNombreTitle_lockReg}" required="true" requiredMessage="#{bundle.CreateNombreRequiredMessage_lockReg}"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_fecUpd}" for="fecUpd" />
+                        <p:calendar id="fecUpd" pattern="MM/dd/yyyy HH:mm:ss" value="#{nombreController.selected.fecUpd}" title="#{bundle.EditNombreTitle_fecUpd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_firstUser}" for="firstUser" />
+                        <p:inputText id="firstUser" value="#{nombreController.selected.firstUser}" title="#{bundle.CreateNombreTitle_firstUser}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_lastUser}" for="lastUser" />
+                        <p:inputText id="lastUser" value="#{nombreController.selected.lastUser}" title="#{bundle.CreateNombreTitle_lastUser}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_firstOid}" for="firstOid" />
+                        <p:inputText id="firstOid" value="#{nombreController.selected.firstOid}" title="#{bundle.CreateNombreTitle_firstOid}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_lastOid}" for="lastOid" />
+                        <p:inputText id="lastOid" value="#{nombreController.selected.lastOid}" title="#{bundle.CreateNombreTitle_lastOid}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_contacto}" for="contacto" />
+                        <p:inputText id="contacto" value="#{nombreController.selected.contacto}" title="#{bundle.CreateNombreTitle_contacto}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{nombreController.selected.direccion}" title="#{bundle.CreateNombreTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{nombreController.selected.telefono}" title="#{bundle.CreateNombreTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.CreateNombreLabel_codRef}" for="codRef" />
+                        <p:inputText id="codRef" value="#{nombreController.selected.codRef}" title="#{bundle.CreateNombreTitle_codRef}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{nombreController.create}" value="#{bundle.Save}" update="display,:NombreListForm:datalist,:growl" oncomplete="handleSubmit(args,'NombreCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="NombreCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

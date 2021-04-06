@@ -1,0 +1,39 @@
+ALTER PROCEDURE "DBA"."insertOrden"( @ynro_ord decimal(10)  )
+as
+BEGIN
+	 /*	ESTE PROCEDIMIENTO CREA LA ORDEN TOMANDO EN CUENTA EL CODIGO DEL PACIENTE*/
+   // declare @xcod_pac decimal(10)
+    declare @xid BIGINT 
+   // declare @xnom_pac VARCHAR (128)
+   // declare @xape_pac VARCHAR (128)
+   // declare @xid_pac varchar (10)
+    declare @xid_nextlab decimal (10)
+    declare @count1 int = 0
+    declare resultados dynamic scroll cursor for 
+           SELECT id,id_nextlab FROM "DBA"."historia" where id_nextlab = @ynro_ord
+  open resultados1
+  
+fetch NEXT resultados1 into @xid,@xid_nextlab
+
+while @count1 <1
+       
+        BEGIN   
+            INSERT INTO orden(
+            id, id_historia, id_empresa, id_plan, id_origen, id_referencia, 
+            nro_externo, sts_admin, sts_tecnico, observaciones, fec_ingreso, 
+            fec_entrega, fec_ini, fec_upd, lock_reg, first_user, first_oid, 
+            last_oid, last_user, m_solicitante, cod_ord, cod_ori, des_ori)
+    VALUES (DEFAULT, @xid, 569, 0, 1, DEFAULT, 
+            DEFAULT, 'PE', 'PE', DEFAULT, '2021-03-20', 
+            DEFAULT, '2021-04-02', '2021-03-03', 0, 'FUNDACION', DEFAULT, 
+            DEFAULT, DEFAULT, 'MEDICO_FUNDACION1', @xid_nextlab, '78', 'FUNDACION')
+            
+          fetch NEXT resultados1  into @xid,@xid_nextlab
+          set @count1 = @count1+1
+
+        END
+
+  close resultados1
+DEALLOCATE RESULTADOS1
+COMMIT 
+END

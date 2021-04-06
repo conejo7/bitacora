@@ -1,0 +1,45 @@
+ALTER PROCEDURE "DBA"."insertPractic"( @zid_orden BIGINT   )
+
+as
+BEGIN
+	 /*	ESTE PROCEDIMIENTO CREA LA PRACTICA */
+   // declare @xcod_pac decimal(10)
+    declare @xid BIGINT 
+    declare @xnom_pac VARCHAR (128)
+    declare @xape_pac VARCHAR (128)
+    declare @xid_pac varchar (10)
+    declare @zid_practica INTEGER 
+    declare @count int = 0
+    declare resultados dynamic scroll cursor for 
+           //SELECT id FROM "DBA"."orden" where id = @zid_orden
+SELECT  "DBA".orden.id,  "DBA".risAvasus.cod_Avasus, "DBA"."orden".cod_ord,
+"DBA"."ava_petxord".cod_ana 
+FROM "DBA"."orden" 
+JOIN "DBA"."ava_petxord" ON "DBA"."ava_petxord".nro_ord = "DBA"."orden".cod_ord
+ and "DBA"."orden".cod_ord = @zid_orden
+JOIN "DBA"."risAvasus" ON "DBA"."ava_petxord".cod_ana like'%'+"DBA".risAvasus.cod_Avalab +'%' 
+ 
+  open resultados
+  
+fetch NEXT resultados into @xid,@zid_practica
+
+while @count <1
+       
+        BEGIN   
+              INSERT INTO practica_x_orden(
+            id, valor_paciente, valor_seguro, fec_atencion, id_plan, sts_admin, 
+            id_nombrep, sts_tecnico, fec_upd, fec_ini, first_user, last_user, 
+            first_oid, last_oid, id_orden, cantidad, lock_reg, id_practica, 
+            id_area, audit_user, fecha_audit, arch_user, fec_arch)
+         VALUES (DEFAULT, DEFAULT, DEFAULT, DEFAULT, 0, DEFAULT, 
+            904, 'PE', DEFAULT ,'2021-03-01' , 'FUNDACION', DEFAULT, 
+            DEFAULT, DEFAULT, @xid, 0, 0, @zid_practica, 
+            23, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+   
+          fetch NEXT resultados  into @xid
+          set @count = @count+1
+        END
+  close resultados
+DEALLOCATE RESULTADOS
+return 1
+END

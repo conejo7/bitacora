@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NombreViewDlg" widgetVar="NombreViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNombreTitle}">
+            <h:form id="NombreViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nombreController.selected != null}">
+                        <h:outputText value="#{bundle.ViewNombreLabel_id}"/>
+                        <h:outputText value="#{nombreController.selected.id}" title="#{bundle.ViewNombreTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_abreviatura}"/>
+                        <h:outputText value="#{nombreController.selected.abreviatura}" title="#{bundle.ViewNombreTitle_abreviatura}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_razonSocial}"/>
+                        <h:outputText value="#{nombreController.selected.razonSocial}" title="#{bundle.ViewNombreTitle_razonSocial}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_ruc}"/>
+                        <h:outputText value="#{nombreController.selected.ruc}" title="#{bundle.ViewNombreTitle_ruc}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_fecIni}"/>
+                        <h:outputText value="#{nombreController.selected.fecIni}" title="#{bundle.ViewNombreTitle_fecIni}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewNombreLabel_lockReg}"/>
+                        <h:outputText value="#{nombreController.selected.lockReg}" title="#{bundle.ViewNombreTitle_lockReg}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_fecUpd}"/>
+                        <h:outputText value="#{nombreController.selected.fecUpd}" title="#{bundle.ViewNombreTitle_fecUpd}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewNombreLabel_firstUser}"/>
+                        <h:outputText value="#{nombreController.selected.firstUser}" title="#{bundle.ViewNombreTitle_firstUser}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_lastUser}"/>
+                        <h:outputText value="#{nombreController.selected.lastUser}" title="#{bundle.ViewNombreTitle_lastUser}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_firstOid}"/>
+                        <h:outputText value="#{nombreController.selected.firstOid}" title="#{bundle.ViewNombreTitle_firstOid}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_lastOid}"/>
+                        <h:outputText value="#{nombreController.selected.lastOid}" title="#{bundle.ViewNombreTitle_lastOid}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_contacto}"/>
+                        <h:outputText value="#{nombreController.selected.contacto}" title="#{bundle.ViewNombreTitle_contacto}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_direccion}"/>
+                        <h:outputText value="#{nombreController.selected.direccion}" title="#{bundle.ViewNombreTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_telefono}"/>
+                        <h:outputText value="#{nombreController.selected.telefono}" title="#{bundle.ViewNombreTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewNombreLabel_codRef}"/>
+                        <h:outputText value="#{nombreController.selected.codRef}" title="#{bundle.ViewNombreTitle_codRef}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="NombreViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
