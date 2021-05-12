@@ -1,0 +1,61 @@
+ALTER PROCEDURE "DBA"."insertPractic"(    )
+
+as
+BEGIN
+/* ESTE PROCEDIMIENTO CREA LA PRACTICA */
+   // declare @xcod_pac decimal(10)
+    declare @xid BIGINT
+    declare @xnom_pac VARCHAR (128)
+    declare @xape_pac VARCHAR (128)
+    declare @xid_pac varchar (10)
+    declare @zid_practica INTEGER
+    declare @pnro_ord decimal(10)
+    declare @pcod_ana VARCHAR (15)
+    declare @count int = 0
+    declare resultados2 dynamic scroll cursor for
+           //SELECT id FROM "DBA"."orden" where id = @zid_orden
+    SELECT "DBA".orden.id,  "DBA".risAvasus.cod_Avasus, "DBA"."orden".cod_ord, "DBA"."ava_petxord".cod_ana
+        FROM "DBA"."ava_lispac"  
+        JOIN "DBA"."ava_lisord" ON "DBA"."ava_lisord".cod_pac = "DBA".ava_lispac.cod_pac
+        JOIN "DBA"."ava_petxord" ON "DBA"."ava_petxord".nro_ord = "DBA"."ava_lisord".nro_ord      
+        AND ("DBA"."ava_petxord".upload =0 AND "DBA"."ava_petxord".nro_ord > 436315 )
+        JOIN "DBA"."risAvasus" ON "DBA"."ava_petxord".cod_ana like'%'+"DBA".risAvasus.cod_Avalab +'%'
+        join "DBA".historia ON ( "DBA".historia.id_nextlab = "DBA"."ava_lisord".nro_ord )
+        join "DBA".orden ON "DBA".orden.id_historia = "DBA".historia.id and ("DBA".historia.id >  786500)
+
+ 
+  open resultados2
+ 
+fetch NEXT resultados2 into @xid,@zid_practica,@pnro_ord,@pcod_ana
+
+while @count <1
+       
+        BEGIN  
+              INSERT INTO practica_x_orden(
+            id, valor_paciente, valor_seguro, fec_atencion, id_plan, sts_admin,
+            id_nombrep, sts_tecnico, fec_upd, fec_ini, first_user, last_user,
+            first_oid, last_oid, id_orden, cantidad, lock_reg, id_practica,
+            id_area, audit_user, fecha_audit, arch_user, fec_arch)
+         VALUES (DEFAULT, DEFAULT, DEFAULT, DEFAULT, 0, DEFAULT,
+            904, 'PE', DEFAULT ,'2021-03-01' , 'FUNDACION3', DEFAULT,
+            DEFAULT, DEFAULT, @xid, 0, 0, @zid_practica,
+            23, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+       
+
+       
+       // update ava_petxord set upload = 1 from ava_petxord
+        //where (nro_ord = @pnro_ord and cod_ana like @pcod_ana)
+     //  update ava_petxord set upload = 1 from ava_petxord
+      //  where (nro_ord = @pnro_ord and cod_ana like @pcod_ana)
+
+       
+      //  update ava_petxord set upload = 3 from ava_petxord
+       // where (nro_ord = @pnro_ord and cod_ana = @pcod_ana)
+
+          fetch NEXT resultados2  into @xid,@zid_practica,@pnro_ord,@pcod_ana
+          set @count = @count+1
+        END
+  close resultados2
+DEALLOCATE RESULTADOS2
+COMMIT
+END

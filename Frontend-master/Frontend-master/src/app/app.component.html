@@ -1,0 +1,46 @@
+<div class="formularioRegistro">
+    <h2>Crear persona</h2>
+    <form [formGroup]="audimagenForm" (ngSubmit)="guardar()">
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" formControlName="apellido" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Edad</label>
+            <input type="number" formControlName="edad" class="form-control">
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary" [disabled]="audimagenForm.invalid">Guardar</button>
+
+    </form>
+</div>
+
+<div class="formularioRegistro">
+    <h2>Personas registradas</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Pais</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<router-outlet></router-outlet>

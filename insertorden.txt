@@ -1,0 +1,52 @@
+ALTER PROCEDURE "DBA"."insertOrden"(   )
+as
+BEGIN
+/* ESTE PROCEDIMIENTO CREA LA ORDEN TOMANDO EN CUENTA EL CODIGO DEL PACIENTE*/
+   // declare @xcod_pac decimal(10)
+    declare @xid BIGINT
+   // declare @xnom_pac VARCHAR (128)
+   // declare @xape_pac VARCHAR (128)
+   // declare @xid_pac varchar (10)
+    declare @ynro_ord decimal(10)
+    declare @xid_nextlab decimal (10)
+    declare @count1 int = 0
+    declare resultados1 dynamic scroll cursor for
+            SELECT
+        "DBA".historia.id, "DBA".historia.id_nextlab
+
+        FROM "DBA"."ava_lispac"  
+        JOIN "DBA"."ava_lisord" ON "DBA"."ava_lisord".cod_pac = "DBA".ava_lispac.cod_pac
+        JOIN "DBA"."ava_petxord" ON "DBA"."ava_petxord".nro_ord = "DBA"."ava_lisord".nro_ord      
+        AND ("DBA"."ava_petxord".upload =0 AND "DBA"."ava_petxord".nro_ord > 436315 )
+        //and ava_lisord.fec_ord >= dateadd(day,-1,today())
+        JOIN "DBA"."risAvasus" ON "DBA"."ava_petxord".cod_ana like'%'+"DBA".risAvasus.cod_Avalab +'%'
+        join "DBA".historia ON ( "DBA".historia.id_nextlab = "DBA"."ava_lisord".nro_ord )
+        and  ("DBA".historia.id >  786500)
+
+  open resultados1
+ 
+fetch NEXT resultados1 into @xid,@xid_nextlab
+
+while @count1 <1
+       
+        BEGIN  
+            INSERT INTO orden(
+            id, id_historia, id_empresa, id_plan, id_origen, id_referencia,
+            nro_externo, sts_admin, sts_tecnico, observaciones, fec_ingreso,
+            fec_entrega, fec_ini, fec_upd, lock_reg, first_user, first_oid,
+            last_oid, last_user, m_solicitante, cod_ord, cod_ori, des_ori)
+    VALUES (DEFAULT, @xid, 569, 0, 1, DEFAULT,
+            DEFAULT, 'PE', 'PE', DEFAULT, '2021-03-20',
+            DEFAULT, '2021-04-02', '2021-03-03', 0, 'FUNDACION1', DEFAULT,
+            DEFAULT, DEFAULT, 'MEDICO_FUNDACION1', @xid_nextlab, '81', 'FUNDACION')
+   
+           
+          fetch NEXT resultados1  into @xid,@xid_nextlab
+          set @count1 = @count1+1
+
+        END
+
+  close resultados1
+DEALLOCATE RESULTADOS1
+COMMIT
+END
